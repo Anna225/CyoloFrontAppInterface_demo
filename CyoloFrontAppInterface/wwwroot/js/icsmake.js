@@ -52,6 +52,9 @@ function customConvertDate(date) {
 }
 
 function customConvertTime(time) {
+    if (time == "") {
+        return "000000";    
+    }
     var event = time;
     event = event.split(":");
     event = event.join("");
