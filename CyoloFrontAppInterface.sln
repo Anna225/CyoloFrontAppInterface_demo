@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyoloFrontAppInterface", "CyoloFrontAppInterface\CyoloFrontAppInterface.csproj", "{24C33E3F-B8BC-44BC-9850-1DECC055ED0B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24C33E3F-B8BC-44BC-9850-1DECC055ED0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24C33E3F-B8BC-44BC-9850-1DECC055ED0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24C33E3F-B8BC-44BC-9850-1DECC055ED0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24C33E3F-B8BC-44BC-9850-1DECC055ED0B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {992D88E6-2EF3-44D0-B9CF-5766084E8DD2}
+	EndGlobalSection
+EndGlobal

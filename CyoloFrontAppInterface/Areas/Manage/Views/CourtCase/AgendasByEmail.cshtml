@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    var fullName = @ViewBag.Lawyer.name + " " + @ViewBag.Lawyer.sureName;
+    ViewData["Title"] = "Welcome " + fullName + "!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 class="thumb-text">@ViewData["Title"]</h1>
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.ActionLink("Back", "Index", "CourtCase",
+            null,
+        new { @class = "btn btn-info align-right"}
+        )
+    </div>      
+</div>
+<table class="table table-striped table-bordered" id="result">
+    <thead>
+        <tr>
+            <th>CourtCaseNo</th>
+            <th>Jurisdiction</th>
+            @*<th>CourtLocation</th>*@
+            <th>ChamberID</th>
+            <th>HearingDate</th>
+            <th>HearingTime</th>
+            <th>HearingType</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.Model == null || ViewBag.Model.Count == 0)
+        {
+            
+        }
+        else
+        {
+            @foreach (var item in ViewBag.Model)
+            {
+                <tr>
+                    <td>@item.agenda.courtCaseNo</td>
+                    <td>@item.agenda.jurisdiction</td>
+                    <td>@item.agenda.chamberID</td>
+                    <td>@item.agenda.hearingDate</td>
+                    <td>@item.agenda.hearingTime</td>
+                    <td>@item.agenda.hearingType</td>
+                    <td>@item.agenda.firstName</td>
+                    <td>@item.agenda.lastName</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

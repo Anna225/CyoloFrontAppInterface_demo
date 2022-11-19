@@ -1,0 +1,183 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var fullName = @ViewBag.Lawyer.name + " " + @ViewBag.Lawyer.sureName;
+    ViewData["Title"] = "Welcome " + fullName + "!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Today"] = DateTime.Now.ToString("yyyy-MM-dd");
+    ViewData["CurTime"] = DateTime.Now.ToString("hh:mm");
+}
+
+<h1 class="thumb-text">@ViewData["Title"]</h1>
+@using (Html.BeginForm("GetByCourtCase", "CourtCase", FormMethod.Post, new { id = "searchform" }))
+{
+    
+    <div class="row">
+        <div class="form-group col-md-12">
+            <label for="jurisdiction">Jurisdiction:</label>
+            <select id="jurisdiction" name="jurisdiction" class="form-control">
+                <option value="@ViewBag.CourtCase.hearingGeneral">@ViewBag.CourtCase.hearingGeneral</option>
+            </select>
+            <p class="error">Please select jurisdiction.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label for="chamberid">ChamberID:</label>
+            <input type="text" id="chamberid" name="chamberid" placeholder="Chamber ID" class="form-control" value="@ViewBag.CourtCase.chamberId" />
+            <p class="error">Please select ChamberID.</p>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="hearingdate">HearingDate:</label>
+            <div class="form-group">
+                <input id="hearingdate" name="hearingdate" width="236" value="@ViewBag.CourtCase.hearingDate" data-format="yyyy-mm-dd" class="form-control" onkeypress="keypresshandle(event)" placeholder="Ex:1970-01-01" />
+                <p class="error">Please select hearingdate.</p>
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="hearingtime">HearingTime:</label>
+            <input id="hearingtime" name="hearingtime" width="236" value="@ViewBag.CourtCase.hearingTime" data-format="HH:mm" class="form-control" placeholder="Ex:14:23" />
+            <input type="hidden" name="courtcaseno" id="courtcaseno" value="@ViewBag.No" />
+            <p class="error">Please select hearingtime.</p>
+        </div>        
+        <div class="col-md-2">
+            <hr style="line-height: 24px; visibility: hidden; margin-bottom: 14px;" />
+            <a class="btn btn-success" onclick="submitForm()">Search</a>
+        </div>
+    </div>
+}
+@Html.Label("datefor", "RESULT FOR:")
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Jurisdiction</th>
+            <th>Chamber ID</th>
+            <th>Hearing Date</th>
+            <th>Hearing Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@ViewBag.CourtCase.hearingGeneral</td>
+            <td>@ViewBag.CourtCase.chamberId</td>
+            <td>@ViewBag.CourtCase.hearingDate</td>
+            <td>@ViewBag.CourtCase.hearingTime</td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table table-striped table-bordered" id="result">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>E-mail</th>
+            <th>Fixed phone number</th>
+            <th>Cell phone number</th>
+            <th>Preferences for receiving requests</th>
+            <th>Additional comments</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 0;
+        }
+        @if (ViewBag.AvailableModel == null || ViewBag.AvailableModel.Count == 0)
+        {
+
+        }else{ 
+            @foreach (var item in ViewBag.AvailableModel){
+                string[] emailArr = splitEmail(@item.lawyer.email);
+                string[] phoneArr = splitPhone(@item.lawyer.phone);
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@item.lawyer.name</td>
+                    <td>@item.lawyer.sureName</td>
+                    <td>@(emailArr.Length > 0 ? emailArr[0] : "")</td>
+                    <td>@(phoneArr.Length > 0 ? @phoneArr[0].Replace("Tel.", "") : "")</td>
+                    <td>@(phoneArr.Length > 1 ? @phoneArr[1].Replace("Tel.", "") : "")</td>
+                    <td>@(emailArr.Length > 1 ? emailArr[1] : "")</td>
+                    <td>Please do not send me requests after 8:00 pm</td>
+                </tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>
+<script>
+    function submitForm() {
+        if ($("#jurisdiction").val() == '') {
+            $("#jurisdiction").siblings().addClass("b");
+            $("#jurisdiction").focus();
+            return;
+        } else {
+            $("#jurisdiction").siblings().removeClass("b");
+        }
+
+        if ($("#hearingdate").val() == '') {
+            $("#hearingdate").parent().siblings("p.error").addClass("b");
+            $("#hearingdate").focus();
+            return;
+        } else {
+            $("#hearingdate").parent().siblings("p.error").removeClass("b");
+        }
+
+        if ($("#hearingtime").val() == '') {
+            $("#hearingtime").parent().siblings("p.error").addClass("b");
+            $("#hearingtime").focus();
+            return;
+        } else {
+            $("#hearingtime").parent().siblings("p.error").removeClass("b");
+        }
+
+        $("#searchform").submit();
+    }
+
+    function getJuridictionList() {
+        $.ajax({
+            url: "/Home/GetAllTypes",
+            type: "get",
+            data: null,
+            dataType: "json",
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Expose-Headers": "*",
+                "Content-Type": "application/json"
+            },
+            success: function (response) {
+                var html = "<option value=''>Select Jurisdiction...</option>";
+                response.sort(compare);
+                response.forEach(item => {
+                    var val = formatSelectionJuridiction(item);
+                    if ("@ViewBag.CourtCase.hearingGeneral" == val) {
+                        html += "<option value='" + val + "' selected>" + val + "</option>";
+                    } else {
+                        html += "<option value='" + val + "'>" + val + "</option>";
+                    }
+                });
+                $("#jurisdiction").html(html);
+            },
+            error: function (err) {
+                var html = "<option value=''>No Result</option>";
+                $("#jurisdiction").html(html);
+            }
+        });
+    }
+</script>
+@{
+    string[] splitEmail(string origin_email)
+    {
+        string temp = origin_email.Replace("[", "").Replace("]", "").Replace(" ", "").Replace("\"", "");
+        string[] result = temp.Split(',');
+        return result;
+    }
+
+    string[] splitPhone(string origin_phone)
+    {
+        string temp = origin_phone.Replace("[", "").Replace("]", "").Replace(" ", "").Replace("\"", "");
+        string[] result = temp.Split(',');
+        return result;
+    }
+}

@@ -1,0 +1,194 @@
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.container {
+    margin-right: 0 auto;
+    width: calc(100% - 80px) !important;
+}
+
+.landing h1 {
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 240px;
+    font-size: 50px;
+    text-shadow: 0 0 80px white;
+}
+
+.thumb-text {
+    text-transform: uppercase;
+}
+
+body {
+    margin-bottom: 60px;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: cover;
+    position: relative;
+}
+
+
+form > div {
+    margin-bottom: 15px;
+}
+
+section {
+    border: 1px solid lightgrey;
+    padding: 16px;
+    border-radius: 10px;
+}
+
+section .form-check-input {
+    margin-left: 0.0em;
+}
+
+header {
+    background-color: #25408f;
+}
+
+nav a {
+    color: white;
+}
+
+.navbar-brand {
+    text-decoration: none;
+}
+
+.bg-login {
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    margin: 16px;
+}
+
+.bg-login .col-md-1,
+.bg-login .col-md-4 {
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.bg-image {
+    padding: 15px;
+}
+
+
+.bg-image > div {
+    background-image: url("../images/main.jpeg");
+    background-repeat: no-repeat;
+    background-position: right top;
+    width: 100%;
+    height: 100%;
+}
+
+.bg-image img {
+    margin-left: auto;
+    float: right;
+}
+
+button.btn {
+    background-color: #25408f;
+    border: none;
+}
+
+button.btn:hover {
+    background-color: #39A7F1;
+    border: none;
+}
+
+.align-right {
+    float: right;
+}
+
+td {
+    word-break: break-word;
+}
+
+table * {
+    font-size: 15px;
+}
+
+.btn.btn-warning {
+    background-color: grey;
+    color: white;
+    border: 1px solid grey;
+}
+
+.btn.btn-warning:hover {
+    background-color: darkgrey;
+    border: 1px solid darkgrey;
+    color: white;
+}
+
+.btn.btn-success {
+    background-color: #40667d;
+    color: white !important;
+    border: 1px solid #40667d;
+}
+
+.btn.btn-success:hover {
+    background-color: #36586d;
+    border: 1px solid #36586d;
+    color: white;
+}
+
+#myModal label {
+    vertical-align: middle;
+    line-height: 40px;
+}
+
+p.error {
+    color: red;
+    text-indent: 10px;
+    display: none;
+}
+
+p.b {
+    display: block;
+}
+
+tr td:first-child {
+    text-align: center;
+}
+
+td > a.btn {
+    width: 90px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+#result_wrapper table * {
+    font-size: 13px;
+}
+
+.btn-download {
+    background-color: slategrey !important;
+    color: white;
+}
+
+.btn-download:hover {
+    background-color: darkgrey !important;
+    color: white;
+}
+
+.input-group-append > button > i.gj-icon {
+    color: #fff;
+}
+
+.input-group-append > button:hover {
+    background-color: transparent;
+    border: 1px solid lightgrey;
+}
+
+.input-group-append > button:hover > i.gj-icon {
+    color: #000;
+}
