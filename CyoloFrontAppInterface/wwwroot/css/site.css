@@ -13,6 +13,8 @@ html {
 .container {
     margin-right: 0 auto;
     width: calc(100% - 80px) !important;
+    min-width: 1024px !important;
+    max-width: 1440px !important;
 }
 
 .landing h1 {
@@ -191,4 +193,25 @@ td > a.btn {
 
 .input-group-append > button:hover > i.gj-icon {
     color: #000;
+}
+
+#approveModal card {
+    padding: 0;
+}
+
+#approveModal .modal-body {
+    padding: 0;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: gray !important;
+    opacity: .5 !important; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: red !important;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: red;
 }

@@ -164,6 +164,7 @@ $(function () {
         getJuridictionList();
     }
 
+
 });
 
 function formatResultJuridiction(data) {
@@ -204,55 +205,65 @@ function compare(a, b) {
     return 0;
 }
 
-function approveAgenda(elem) {
-    /*
-    options = {
-        tapToDismiss: true,
-        toastClass: 'toast',
-        containerId: 'toast-container',
-        debug: false,
-        fadeIn: 3000,
-        fadeOut: 4000,
-        extendedTimeOut: 1000,
-        iconClass: 'toast-info',
-        positionClass: 'toast-top-right',
-        timeOut: 5000, // Set timeOut to 0 to make it sticky
-        titleClass: 'toast-title',
-        messageClass: 'toast-message'
-    }
-    $('.toast').toast(options);
-    $('.toast').toast('show'); return;
-    */
-    // e.preventDefault();
-    var caseno = $(elem).data("caseno");
-    if (caseno != null) {
-        $.ajax({
-            type: "GET",
-            url: "/Manage/CourtCase/Approve?caseno=" + caseno,
-            data: caseno,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                if (response != null) {
-                    $('.toast-body').text(response.value);
-                    $('.toast').toast({ animation: true, delay: 2000, fadeIn: true, fadeDelay: 2500, fadeOut: true });
-                    $('.toast').toast('show');
-                } else {
-                    $('.toast-body').text(response.value);
-                    $('.toast').toast({ animation: true, delay: 2000 });
-                    $('.toast').toast('show');
-                }
-            },
-            failure: function (response) {
-                $('.toast-body').text(response.responseText);
-                $('.toast').toast({ animation: true, delay: 2000 });
-                $('.toast').toast('show');
-            },
-            error: function (response) {
-                $('.toast-body').text(response.responseText);
-                $('.toast').toast({ animation: true, delay: 2000 });
-                $('.toast').toast('show');
-            }
+function approveAgenda(elem, e) {
+    e.preventDefault();
+    var count = 0;
+    var modalConfirm = function (callback) {
+
+        if (count == 0) {
+            $("#approveModal").modal('show');
+            count++;
+        } else {
+            return;
+        }        
+
+        $("#modal-btn-ok").on("click", function () {
+            callback(true);
+            $("#approveModal").modal('hide');
+            return;
         });
-    }
+
+        $("#modal-btn-cancel").on("click", function () {
+            callback(false);
+            $("#approveModal").modal('hide');
+            return;
+        });
+    };
+
+    modalConfirm(function (confirm) {
+        if (confirm) {
+            var caseno = $(elem).data("caseno");
+            if (caseno != null) {
+                $.ajax({
+                    type: "GET",
+                    url: "/Manage/CourtCase/Approve?caseno=" + caseno,
+                    data: caseno,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response != null) {
+                            $('.toast-body').text(response.value);
+                            $('.toast').toast({ animation: true, delay: 2000, fadeIn: true, fadeDelay: 2500, fadeOut: true });
+                            $('.toast').toast('show');
+                        } else {
+                            $('.toast-body').text(response.value);
+                            $('.toast').toast({ animation: true, delay: 2000 });
+                            $('.toast').toast('show');
+                        }
+                    },
+                    failure: function (response) {
+                        $('.toast-body').text(response.responseText);
+                        $('.toast').toast({ animation: true, delay: 2000 });
+                        $('.toast').toast('show');
+                    },
+                    error: function (response) {
+                        $('.toast-body').text(response.responseText);
+                        $('.toast').toast({ animation: true, delay: 2000 });
+                        $('.toast').toast('show');
+                    }
+                });
+            }
+        }
+    });
+    
 }
