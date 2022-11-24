@@ -9,20 +9,20 @@ function downloadCourtCase(elem, id) {
     var tds = $(tr).find("td");
     var eventDate = {
         start: {
-            day: $(tds[4]).text(),
-            time: $(tds[5]).text()
+            day: $(tds[5]).text(),
+            time: $(tds[6]).text()
         },
         end: {
-            day: $(tds[4]).text(),
-            time: $(tds[5]).text()
+            day: $(tds[5]).text(),
+            time: $(tds[6]).text()
         }
     };
     var summary = "Hearing";
     var description =
-        "CourtCaseNo:" + $(tds[1]).text() +
-        ",=0D=0A Chamber ID: " + $(tds[3]).text() +
-        ",=0D=0A Hearing Type: " + $(tds[6]).text();
-    var location = $(tds[2]).text();
+        "CourtCaseNo:" + $(tds[2]).text() +
+        ",=0D=0A Chamber ID: " + $(tds[4]).text() +
+        ",=0D=0A Hearing Type: " + $(tds[7]).text();
+    var location = $(tds[3]).text();
     var a = document.createElement('a');
     a.download = 'scheduler.ics';
     a.href = makeIcsFile(eventDate, summary, description, location);
@@ -140,7 +140,7 @@ function makeIcsFile(date, summary, description, location) {
         customConvertDate(date.start.day) + "T" + customConvertTime(date.start.time, 0) + 
         "\n" +
         "DTEND;VALUE=DATE:" +
-        customConvertDate(date.end.day) + "T" + customConvertTime(date.end.time, 1)
+        customConvertDate(date.end.day) + "T" + customConvertTime(date.end.time, 1) + 
         "\n" +
         "END:VEVENT\n" +
         "END:VCALENDAR";

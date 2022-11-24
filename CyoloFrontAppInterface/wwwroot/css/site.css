@@ -209,9 +209,15 @@ td > a.btn {
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: red !important;
+    color: gray !important;
+    opacity: .5 !important; /* Firefox */
 }
 
 ::-ms-input-placeholder { /* Microsoft Edge */
-    color: red;
+    color: gray !important;
+    opacity: .5 !important; /* Firefox */
+}
+
+button.btn-agenda-upload {
+    display: none;
 }
