@@ -16,8 +16,9 @@ namespace CyoloFrontAppInterface.Data
         private string _ocp_apim_subscription_key;
         public BackendServerAPI()
         {
-            _client = new RestClient("https://cyoloapidemo.azurewebsites.net");
-            // _client = new RestClient("https://lawyerapi.azure-api.net");
+            // _client = new RestClient("https://localhost:7213");//test for speed up
+            _client = new RestClient("https://cyoloapi-demo.azurewebsites.net");//demo
+            // _client = new RestClient("https://lawyerapi.azure-api.net");//real
             _ocp_apim_subscription_key = "f05341ebf7244456b8c3bed62c5795a0";
             // or _ocp_apim_subscription_key = "f32b5ffa39a54d50b82dd80b7fd06bc6";
         }
@@ -43,7 +44,7 @@ namespace CyoloFrontAppInterface.Data
             var response = await _client.GetAsync(request);
             return JsonConvert.DeserializeObject<LawyerDto>(response.Content);
         }
-        public async Task<CourtCaseAgendaDto> GetCourtCaseByNo(string courtCaseNo)
+        public async Task<CourtCaseAgendaDto> GetCourtCaseByNo(int courtCaseNo)
         {
             var request = new RestRequest($"/api/CourtCaseAgendas/GetCourtCaseByNo/{courtCaseNo}");
             request.AddHeader("ocp-apim-subscription-key", _ocp_apim_subscription_key);
@@ -88,7 +89,6 @@ namespace CyoloFrontAppInterface.Data
             request.AddHeader("Accept", "application/json");
             SearchDto searchdto = new SearchDto
             {
-                CourtCaseNo = collection["courtcaseno"].ToString(),
                 HearingGeneral = collection["jurisdiction"].ToString(),
                 ChamberID = collection["chamberid"].ToString(),
                 HearingDate = collection["hearingdate"].ToString(),
@@ -125,21 +125,23 @@ namespace CyoloFrontAppInterface.Data
             return JsonConvert.DeserializeObject<dynamic>(response.Content);
         }
         
-        public async Task<dynamic> GetAvailableLawyersByCourtCaseNo(string courtcaseno)
+        public async Task<dynamic> GetAvailableLawyersByCourtCaseNo(int courtcaseno)
         {
             var request = new RestRequest($"/api/Presentation/GetByCourtCaseNo/{courtcaseno}");
             request.AddHeader("ocp-apim-subscription-key", _ocp_apim_subscription_key);
             var response = await _client.GetAsync(request);
             return JsonConvert.DeserializeObject<dynamic>(response.Content);
         }
-        public async Task<dynamic> SetAvailableCourtCaseNo(string courtcaseno, int lawyerid)
+        public async Task<dynamic> SetAvailableCourtCaseNo(int courtcaseno, int lawyerid)
         {
             PresentationDto presentationdto = new PresentationDto
             {
                 ID = 0,
                 CourtCaseNo = courtcaseno,
                 LawyerId = lawyerid,
-                Available = 1
+                Available = 1,
+                ReceiveRef = "1st Email, second Call",
+                Comments = "Please do not send me requests after 8:00 pm\r\n"
             };
             var request = new RestRequest($"/api/Presentation");
             request.AddHeader("ocp-apim-subscription-key", _ocp_apim_subscription_key);

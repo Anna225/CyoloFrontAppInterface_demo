@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Qi3T0Z4bEc64go32lGcgBS74aD61HDlD35tAP3+4BsE5W3wkHc5BmnbpndOJq6vPIvvtAuvF5YFMP8SkudaESw==",
+  "dgSpecHash": "K9/DyRDRiH0uZLlsQX8zdT2GC+BrqUodmR3OXTfbH2wE/u6eag3hiOjSKg/XTzYWsW0ZC3eopFucHs3NKgl3Fg==",
   "success": true,
-  "projectFilePath": "D:\\CYOLO\\DEMO\\CyoloFrontAppInterface\\CyoloFrontAppInterface\\CyoloFrontAppInterface.csproj",
+  "projectFilePath": "E:\\LawyerCyoloPro\\Backup2022-12-05\\CyoloFrontAppInterface_demo\\CyoloFrontAppInterface\\CyoloFrontAppInterface.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Yaroslov\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Yaroslov\\.nuget\\packages\\jquery\\1.8.0\\jquery.1.8.0.nupkg.sha512",

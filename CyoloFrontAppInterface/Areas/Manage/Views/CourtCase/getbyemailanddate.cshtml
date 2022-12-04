@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    var fullName = @ViewBag.Lawyer.name + " " + @ViewBag.Lawyer.sureName;
+    var fullName = @ViewBag.Lawyer.name;
     ViewData["Title"] = "Welcome " + fullName + "!";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -76,12 +76,9 @@
                     <td>@item.courtcase.hearingTime</td>
                     <td>@item.courtcase.hearingType</td>
                     <td style="min-width: 180px;">
-                        @{
-                            string courtcaseid = Convert.ToString(item.courtcase.courtCaseNo);
-                        }
-                        <a href="javascript:void(0);" data-target="#approveModal" class="btn btn-success btn-approve" data-caseno="@item.courtcase.courtCaseNo" onclick="approveAgenda(this, event)" data-email="@ViewData["Message"]">Available</a>
+                        <a href="javascript:void(0);" data-target="#approveModal" class="btn btn-success btn-approve" data-caseno="@item.courtcase.id" onclick="approveAgenda(this, event)" data-email="@ViewData["Email"]">Available</a>
                         @Html.ActionLink("Request", "Match", "CourtCase",
-                            new { courtCaseNo =  courtcaseid },
+                            new { courtCaseNo =  (int)item.courtcase.id },
                             new { @class = "btn btn-warning"}
                         )
                     </td>
@@ -116,7 +113,7 @@
                         <label>UploaderEmail</label>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" id="uploaderemail" value="@ViewData["Message"]" placeholder="Uploader Email" class="form-control" />
+                        <input type="text" id="uploaderemail" value="@ViewData["Email"]" placeholder="Uploader Email" class="form-control" />
                         <p class="error">Please enter Email.</p>
                     </div>
                 </div>

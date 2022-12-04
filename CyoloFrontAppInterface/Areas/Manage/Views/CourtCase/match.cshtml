@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    var fullName = @ViewBag.Lawyer.name + " " + @ViewBag.Lawyer.sureName;
+    var fullName = @ViewBag.Lawyer.name;
     ViewData["Title"] = "Welcome " + fullName + "!";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Today"] = DateTime.Now.ToString("yyyy-MM-dd");
@@ -71,8 +71,7 @@
     <thead>
         <tr>
             <th>No</th>
-            <th>First name</th>
-            <th>Last name</th>
+            <th>Full name</th>
             <th>E-mail</th>
             <th>Fixed phone number</th>
             <th>Cell phone number</th>
@@ -89,17 +88,14 @@
 
         }else{ 
             @foreach (var item in ViewBag.AvailableModel){
-                string[] emailArr = splitEmail(@item.lawyer.email);
-                string[] phoneArr = splitPhone(@item.lawyer.phone);
                 <tr>
                     <td>@(i + 1)</td>
                     <td>@item.lawyer.name</td>
-                    <td>@item.lawyer.sureName</td>
-                    <td>@(emailArr.Length > 0 ? emailArr[0] : "")</td>
-                    <td>@(phoneArr.Length > 0 ? @phoneArr[0].Replace("Tel.", "") : "")</td>
-                    <td>@(phoneArr.Length > 1 ? @phoneArr[1].Replace("Tel.", "") : "")</td>
-                    <td>@(emailArr.Length > 1 ? emailArr[1] : "")</td>
-                    <td>Please do not send me requests after 8:00 pm</td>
+                    <td>@item.lawyer.email</td>
+                    <td>@item.lawyer.phone</td>
+                    <td>@item.lawyer.fax</td>
+                    <td>@item.presentation.receiveRef</td>
+                    <td>@item.presentation.comments</td>
                 </tr>
                 i++;
             }
@@ -166,18 +162,3 @@
         });
     }
 </script>
-@{
-    string[] splitEmail(string origin_email)
-    {
-        string temp = origin_email.Replace("[", "").Replace("]", "").Replace(" ", "").Replace("\"", "");
-        string[] result = temp.Split(',');
-        return result;
-    }
-
-    string[] splitPhone(string origin_phone)
-    {
-        string temp = origin_phone.Replace("[", "").Replace("]", "").Replace(" ", "").Replace("\"", "");
-        string[] result = temp.Split(',');
-        return result;
-    }
-}

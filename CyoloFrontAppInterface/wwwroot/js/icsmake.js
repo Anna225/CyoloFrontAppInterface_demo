@@ -20,8 +20,8 @@ function downloadCourtCase(elem, id) {
     var summary = "Hearing";
     var description =
         "CourtCaseNo:" + $(tds[2]).text() +
-        ",=0D=0A Chamber ID: " + $(tds[4]).text() +
-        ",=0D=0A Hearing Type: " + $(tds[7]).text();
+        ", Chamber ID: " + $(tds[4]).text() +
+        ", Hearing Type: " + $(tds[7]).text();
     var location = $(tds[3]).text();
     var a = document.createElement('a');
     a.download = 'scheduler.ics';

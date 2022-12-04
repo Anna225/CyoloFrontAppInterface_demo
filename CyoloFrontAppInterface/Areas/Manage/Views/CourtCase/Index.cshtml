@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @{
-    var fullName = @ViewBag.Lawyer.name + " " + @ViewBag.Lawyer.sureName;
+    var fullName = @ViewBag.Lawyer.name;
     ViewData["Title"] = "Welcome " + fullName + "!";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,7 +10,7 @@
     <div class="row">
         <div class="form-group col-md-4">
             @Html.Label("name", "Lawyer's Full Name")
-            @Html.TextBox("name", (string)@fullName, new { @class = "form-control", @placeholder="Ex:Nadia Ouzoubair", @onkeypress="keypresshandle(event)" })
+            @Html.TextBox("name", "", new { @class = "form-control", @placeholder="Ex:Nadia Ouzoubair", @onkeypress="keypresshandle(event)" })
             <p class="error">Please enter lawyer's name.</p>
         </div>
         <div class="form-group col-md-3">
@@ -40,51 +40,7 @@
             <th>Offer on request representaion</th>
         </tr>
     </thead>
-    <tbody>
-        @{
-            var i = 0;
-        }
-        @if (ViewBag.Model == null || ViewBag.Model.Count == 0){
-
-        }else{        
-            @foreach (var item in ViewBag.Model)
-            {
-                string str = item.courtcase.hearingGeneral.ToString().Trim();
-                if (str.Substring(str.Length - 1) == ",")
-                {
-                    str = str.Substring(0, str.Length - 1);
-                }
-                <tr>
-                    <td>
-                        @(i + 1)
-                    </td>
-                    <td>
-                        <button class="btn btn-download" title="Download" onclick="downloadCourtCase(this, @item.courtcase.id)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
-                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
-                            </svg>
-                        </button>
-                    </td>
-                    <td>@item.courtcase.courtCaseNo</td>
-                    <td>@str</td>
-                    <td>@item.courtcase.chamberID</td>
-                    <td>@item.courtcase.hearingDate</td>
-                    <td>@item.courtcase.hearingTime</td>
-                    <td>@item.courtcase.hearingType</td>
-                    <td style="min-width: 180px;">
-                        @{string courtcaseid = Convert.ToString(item.courtcase.courtCaseNo);}
-                        <a href="javascript:void(0);" class="btn btn-success btn-approve" data-caseno="@item.courtcase.courtCaseNo" onclick="approveAgenda(this, event)" data-email="@ViewData["Message"]">Available</a>
-                        @Html.ActionLink("Request", "Match", "CourtCase",
-                            new { courtCaseNo =  courtcaseid },
-                            new { @class = "btn btn-warning"}
-                        )
-                    </td>
-                </tr>
-                i++;
-            }
-        }
-    </tbody>
+    <tbody></tbody>
 </table>
 <!-- The Modal -->
 <div class="modal fade" id="myModal">
@@ -111,7 +67,7 @@
                         <label>UploaderEmail</label>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" id="uploaderemail" value="@ViewData["Message"]" placeholder="Uploader Email" class="form-control" />
+                        <input type="text" id="uploaderemail" value="@ViewBag.Email" placeholder="Uploader Email" class="form-control" />
                         <p class="error">Please enter Email.</p>
                     </div>
                 </div>

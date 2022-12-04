@@ -33,19 +33,16 @@ namespace CyoloFrontAppInterface.Areas.Manage.Controllers
             BackendServerAPI ls = new BackendServerAPI();
             try
             {
-                ViewBag.Model = await ls.GetCourtCaseByEmailAndDate(email, date);
                 ViewBag.Lawyer = await ls.GetLawyerByEmail(email);
             }
             catch(Exception ex)
             {
-                ViewBag.Model = null;
                 Console.WriteLine(ex);
             }
-
-            ViewData["Message"] = HttpContext.Session.GetString("userinfo");
+            ViewData["Email"] = email;
             ViewBag.Today = date;
             ViewBag.Email = email;
-            
+
             return View();
         }
 
@@ -74,10 +71,8 @@ namespace CyoloFrontAppInterface.Areas.Manage.Controllers
                 ViewBag.Model = null;
                 Console.WriteLine(ex);
             }
-            ViewData["Message"] = HttpContext.Session.GetString("userinfo");
+            ViewData["Email"] = HttpContext.Session.GetString("userinfo");
             ViewBag.Today = date;
-            ViewBag.Email = name;
-
 
             return View();
         }
@@ -92,7 +87,7 @@ namespace CyoloFrontAppInterface.Areas.Manage.Controllers
 
             BackendServerAPI ls = new BackendServerAPI();
             ViewBag.Lawyer = await ls.GetLawyerByEmail(HttpContext.Session.GetString("userinfo"));
-            ViewData["Message"] = HttpContext.Session.GetString("userinfo");
+            ViewData["Email"] = HttpContext.Session.GetString("userinfo");
 
             try
             {
@@ -108,7 +103,7 @@ namespace CyoloFrontAppInterface.Areas.Manage.Controllers
         }
 
         // GET: CourtCaseController/Match
-        public async Task<ActionResult> Match(string courtCaseNo)
+        public async Task<ActionResult> Match(int courtCaseNo)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("userinfo")))
             {
@@ -121,14 +116,14 @@ namespace CyoloFrontAppInterface.Areas.Manage.Controllers
             ViewBag.Lawyer = await ls.GetLawyerByEmail(HttpContext.Session.GetString("userinfo"));
             ViewBag.AvailableModel = await ls.GetAvailableLawyersByCourtCaseNo(courtCaseNo);
             ViewBag.No = courtCaseNo;
-            ViewData["Message"] = HttpContext.Session.GetString("userinfo");
+            ViewData["Email"] = HttpContext.Session.GetString("userinfo");
             
             return View();
         }
 
         [HttpGet]
         // GET: CourtCaseController/Approve
-        public async Task<JsonResult?> Approve(string caseno)
+        public async Task<JsonResult?> Approve(int caseno)
         {
             JsonResult? result = null;
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("userinfo")))
@@ -158,16 +153,14 @@ namespace CyoloFrontAppInterface.Areas.Manage.Controllers
             ViewBag.Lawyer = await ls.GetLawyerByEmail(HttpContext.Session.GetString("userinfo"));
 
             SearchDto retval = new SearchDto {
-                CourtCaseNo = collection["courtcaseno"],
                 HearingGeneral = collection["jurisdiction"],
                 ChamberID = collection["chamberid"],
                 HearingDate = collection["hearingdate"],
                 HearingTime = collection["hearingtime"]
             };
-
+            ViewData["Email"] = HttpContext.Session.GetString("userinfo");
             ViewBag.CourtCase = retval;
             ViewBag.AvailableModel = await ls.GetByCourtCase(collection);
-            ViewData["Message"] = HttpContext.Session.GetString("userinfo");
             ViewBag.Number = collection["courtcaseno"];
             
             return View();
